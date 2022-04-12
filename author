@@ -1,0 +1,180 @@
+student@student-OptiPlex-3050:~$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 36
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database d3;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [d3]> create table author(aid int primary key,aname varchar(20),city varchar(12),country varchar(15));
+Query OK, 0 rows affected (0.22 sec)
+
+MariaDB [d3]> insert into author values(1,'ram','nagar','india');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [d3]> insert into author values(2,'krish','thrissur','india');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [d3]> insert into author values(3,'rishi','ernakulam','india');
+^[[AQuery OK, 1 row affected (0.38 sec)
+
+MariaDB [d3]> insert into author values(4,'sakshi','kannur','india');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [d3]> create table publisher(pid int primary key,pname varchar(30),city varchar(15),country varchar(12));Query OK, 0 rows affected (0.64 sec)
+
+MariaDB [d3]> insert into publisher values(1,'jai','nagar','india');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [d3]> insert into publisher values(2,'jo','thrissur','india');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [d3]> insert into publisher values(3,'singh','ernakulam','india');
+Query OK, 1 row affected (0.44 sec)
+
+MariaDB [d3]> insert into publisher values(4,'rayan','kannur','india');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [d3]> create table category(cid int primary key,description varchar(30));
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [d3]> insert into category values(1,'fiction');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [d3]> insert into category values(2,'fiction');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [d3]> insert into category values(3,'script');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [d3]> insert into category values(4,'printing');
+Query OK, 1 row affected (0.05 sec)
+
+
+MariaDB [d3]> create table books(bukid int,buktitle varchar(15),aid int references author,pid int references publisher,cid int references category,year int,price int);
+Query OK, 0 rows affected (0.26 sec)
+
+MariaDB [d3]> insert into books values(1,'back to the mind',1,1,1,2000,500);
+Query OK, 1 row affected, 1 warning (0.43 sec)
+
+MariaDB [d3]> insert into books values(2,'sunrise',2,2,2,1998,500);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [d3]> insert into books values(3,'The shadow',3,3,3,1997,600);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [d3]> insert into books values(4,'peace',4,4,4,1996,750);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [d3]> select * from author;
++-----+--------+-----------+---------+
+| aid | aname  | city      | country |
++-----+--------+-----------+---------+
+|   1 | ram    | nagar     | india   |
+|   2 | krish  | thrissur  | india   |
+|   3 | rishi  | ernakulam | india   |
+|   4 | sakshi | kannur    | india   |
++-----+--------+-----------+---------+
+4 rows in set (0.00 sec)
+
+MariaDB [d3]> select * from publisher;
++-----+-------+-----------+---------+
+| pid | pname | city      | country |
++-----+-------+-----------+---------+
+|   1 | jai   | nagar     | india   |
+|   2 | jo    | thrissur  | india   |
+|   3 | singh | ernakulam | india   |
+|   4 | rayan | kannur    | india   |
++-----+-------+-----------+---------+
+4 rows in set (0.00 sec)
+
+MariaDB [d3]> select * from category ;
++-----+-------------+
+| cid | description |
++-----+-------------+
+|   1 | fiction     |
+|   2 | fiction     |
+|   3 | script      |
+|   4 | printing    |
++-----+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [d3]> select * from books;
++-------+-----------------+------+------+------+------+-------+
+| bukid | buktitle        | aid  | pid  | cid  | year | price |
++-------+-----------------+------+------+------+------+-------+
+|     1 | back to the min |    1 |    1 |    1 | 2000 |   500 |
+|     2 | sunrise         |    2 |    2 |    2 | 1998 |   500 |
+|     3 | The shadow      |    3 |    3 |    3 | 1997 |   600 |
+|     4 | peace           |    4 |    4 |    4 | 1996 |   750 |
++-------+-----------------+------+------+------+------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [d3]> select bukid,buktitle,price from books;
++-------+-----------------+-------+
+| bukid | buktitle        | price |
++-------+-----------------+-------+
+|     1 | back to the min |   500 |
+|     2 | sunrise         |   500 |
+|     3 | The shadow      |   600 |
+|     4 | peace           |   750 |
++-------+-----------------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [d3]> select buktitle from books where price>500;
++------------+
+| buktitle   |
++------------+
+| The shadow |
+| peace      |
++------------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [d3]> select * from books where buktitle like 'b%';
++-------+-----------------+------+------+------+------+-------+
+| bukid | buktitle        | aid  | pid  | cid  | year | price |
++-------+-----------------+------+------+------+------+-------+
+|     1 | back to the min |    1 |    1 |    1 | 2000 |   500 |
++-------+-----------------+------+------+------+------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [d3]> select * from books where price between 600 and 800;
++-------+------------+------+------+------+------+-------+
+| bukid | buktitle   | aid  | pid  | cid  | year | price |
++-------+------------+------+------+------+------+-------+
+|     3 | The shadow |    3 |    3 |    3 | 1997 |   600 |
+|     4 | peace      |    4 |    4 |    4 | 1996 |   750 |
++-------+------------+------+------+------+------+-------+
+2 rows in set (0.00 sec)
+
+
+
+MariaDB [d3]> select buktitle from books where cid in(select cid from category where description!='fiction'); 
++------------+
+| buktitle   |
++------------+
+| The shadow |
+| peace      |
++------------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [d3]> select buktitle,author.aname,publisher.pname from books left join author on author.aid=books.aid left join publisher on publisher.pid=books.pid where year in(1996,1997,1998);
++------------+--------+-------+
+| buktitle   | aname  | pname |
++------------+--------+-------+
+| sunrise    | krish  | jo    |
+| The shadow | rishi  | singh |
+| peace      | sakshi | rayan |
++------------+--------+-------+
+3 rows in set (0.00 sec)
+
+MariaDB [d3]> 
+

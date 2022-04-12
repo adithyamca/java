@@ -1,0 +1,119 @@
+student@student-OptiPlex-3050:~$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 34
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database data1;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use data1;
+Database changed
+MariaDB [data1]>  create table customer(ci int,cname varchar(20),salary int);
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [data1]>  start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [data1]> 
+MariaDB [data1]> insert into customer values(1,'pinky',10000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> insert into customer values(2,'micky',11000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> insert into customer values(3,'vicky',12000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [data1]> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [data1]> select * from customer;
++------+-------+--------+
+| ci   | cname | salary |
++------+-------+--------+
+|    1 | pinky |  10000 |
+|    2 | micky |  11000 |
+|    3 | vicky |  12000 |
++------+-------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [data1]>  delete from customer where ci=3;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+MariaDB [data1]> select * from customer;
++------+-------+--------+
+| ci   | cname | salary |
++------+-------+--------+
+|    1 | pinky |  10000 |
+|    2 | micky |  11000 |
+|    3 | vicky |  12000 |
++------+-------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [data1]>  start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [data1]> savepoint sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [data1]> insert into customer values(4,'nicky',12000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> select * from customer;
++------+-------+--------+
+| ci   | cname | salary |
++------+-------+--------+
+|    1 | pinky |  10000 |
+|    2 | micky |  11000 |
+|    3 | vicky |  12000 |
+|    4 | nicky |  12000 |
++------+-------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [data1]>  delete from customer where ci=4;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [data1]> savepoint sp4;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [data1]> insert into customer values(6,'kicky',9000);
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [data1]> select * from customer;
++------+-------+--------+
+| ci   | cname | salary |
++------+-------+--------+
+|    1 | pinky |  10000 |
+|    2 | micky |  11000 |
+|    3 | vicky |  12000 |
+|    6 | kicky |   9000 |
++------+-------+--------+
+4 rows in set (0.01 sec)
+
+MariaDB [data1]> rollback to sp3;
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [data1]> select * from customer;
++------+-------+--------+
+| ci   | cname | salary |
++------+-------+--------+
+|    1 | pinky |  10000 |
+|    2 | micky |  11000 |
+|    3 | vicky |  12000 |
++------+-------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [data1]> 
+

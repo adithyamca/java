@@ -1,0 +1,297 @@
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| adithya            |
+| db1                |
+| db2                |
+| db3                |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+7 rows in set (0.03 sec)
+
+MariaDB [(none)]> create database db4;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [db4]> create table jobs(jobid int primary key,jobtitle varchar(20),minsalary int,maxsalary int
+    -> );
+Query OK, 0 rows affected (0.22 sec)
+
+
+MariaDB [db4]> insert into jobs values(1,'manager',30000,80000);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db4]> insert into jobs values(2,'pa',20000,40000);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db4]> insert into jobs values(3,'coordinator',30000,50000);
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [db4]> insert into jobs values(4,'clerk',15000,20000);
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db4]> insert into jobs values(5,'clerk',14000,30000);
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db4]> select * from jobs;
++-------+-------------+-----------+-----------+
+| jobid | jobtitle    | minsalary | maxsalary |
++-------+-------------+-----------+-----------+
+|     1 | manager     |     30000 |     80000 |
+|     2 | pa          |     20000 |     40000 |
+|     3 | coordinator |     30000 |     50000 |
+|     4 | clerk       |     15000 |     20000 |
+|     5 | clerk       |     14000 |     30000 |
++-------+-------------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [db4]> create table employees(empid int,fstname varchar(30),lastname varchar(15),email varchar(30),phnnumber int,hire date,jobid int references jobs,salary int,managerid int,deptid int);
+Query OK, 0 rows affected (0.61 sec)
+
+
+MariaDB [db4]> create table departments(department_id int primary key,department_name varchar(10));
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [db4]> insert into departments values(1,'importing')
+    -> ;
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [db4]> insert into departments values(2,'exporting');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db4]> insert into departments values(3,'managing');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db4]> insert into departments values(4,'resource');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db4]> insert into departments values(5,'funding');
+Query OK, 1 row affected (0.30 sec)
+
+MariaDB [db4]> insert into employees values(1,'adithya','radhu','aradithya@gmail.com',9961487411,2022-06-20,1,50000,1,1);
+Query OK, 1 row affected, 2 warnings (0.04 sec)
+
+MariaDB [db4]> insert into employees values(2,'maria','r','maria@gmail.com',9961489761,2022-06-10,1,30000,2,2);
+Query OK, 1 row affected, 2 warnings (0.03 sec)
+
+MariaDB [db4]> insert into employees values(3,'veena','k','veena@gmail.com',9961489971,2022-06-15,3,20000,3,3);
+Query OK, 1 row affected, 2 warnings (0.42 sec)
+
+MariaDB [db4]> insert into employees values(4,'raju','s','raju@gmail.com',9961487931,2022-05-30,3,15000,4,4);
+Query OK, 1 row affected, 2 warnings (0.43 sec)
+
+MariaDB [db4]> insert into employees values(5,'priya','s','priya@gmail.com',9961487987,2022-05-27,3,14000,5,5);
+Query OK, 1 row affected, 2 warnings (0.04 sec)
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+| empid | fstname | lastname | email               | phnnumber  | hire       | jobid | salary | managerid | deptid |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 | 0000-00-00 |     1 |  50000 |         1 |      1 |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 | 0000-00-00 |     1 |  30000 |         2 |      2 |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 | 0000-00-00 |     3 |  20000 |         3 |      3 |
+|     4 | raju    | s        | raju@gmail.com      | 2147483647 | 0000-00-00 |     3 |  15000 |         4 |      4 |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 | 0000-00-00 |     3 |  14000 |         5 |      5 |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [db4]> update employees set hire='2022-06-20' where empid=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set hire='2022-06-10' where empid=2;
+Query OK, 1 row affected (0.43 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set hire='2022-06-15' where empid=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set hire='2022-05-30' where empid=4;
+Query OK, 1 row affected (0.43 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set hire='2022-05-27' where empid=5;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+| empid | fstname | lastname | email               | phnnumber  | hire       | jobid | salary | managerid | deptid |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 | 2022-06-20 |     1 |  50000 |         1 |      1 |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 | 2022-06-10 |     1 |  30000 |         2 |      2 |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 | 2022-06-15 |     3 |  20000 |         3 |      3 |
+|     4 | raju    | s        | raju@gmail.com      | 2147483647 | 2022-05-30 |     3 |  15000 |         4 |      4 |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 | 2022-05-27 |     3 |  14000 |         5 |      5 |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [db4]> rename table departments to dept;
+Query OK, 0 rows affected (0.51 sec)
+
+
+MariaDB [db4]> desc dept;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int(11)     | NO   | PRI | NULL    |       |
+| department_name | varchar(10) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+MariaDB [db4]> alter table employees modify salary smallint;
+Query OK, 5 rows affected, 1 warning (0.64 sec)    
+Records: 5  Duplicates: 0  Warnings: 1
+
+MariaDB [db4]> alter table employees add commission int;
+Query OK, 0 rows affected (0.75 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+| empid | fstname | lastname | email               | phnnumber  | hire       | jobid | salary | managerid | deptid | commission |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 | 2022-06-20 |     1 |  32767 |         1 |      1 |       NULL |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 | 2022-06-10 |     1 |  30000 |         2 |      2 |       NULL |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 | 2022-06-15 |     3 |  20000 |         3 |      3 |       NULL |
+|     4 | raju    | s        | raju@gmail.com      | 2147483647 | 2022-05-30 |     3 |  15000 |         4 |      4 |       NULL |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 | 2022-05-27 |     3 |  14000 |         5 |      5 |       NULL |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db4]> update employees set commission=1000 where empid=1;
+Query OK, 1 row affected (0.49 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set commission=1000 where empid=2;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set commission=1000 where empid=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set commission=1000 where empid=4;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> update employees set commission=1000 where empid=5;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+| empid | fstname | lastname | email               | phnnumber  | hire       | jobid | salary | managerid | deptid | commission |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 | 2022-06-20 |     1 |  32767 |         1 |      1 |       1000 |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 | 2022-06-10 |     1 |  30000 |         2 |      2 |       1000 |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 | 2022-06-15 |     3 |  20000 |         3 |      3 |       1000 |
+|     4 | raju    | s        | raju@gmail.com      | 2147483647 | 2022-05-30 |     3 |  15000 |         4 |      4 |       1000 |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 | 2022-05-27 |     3 |  14000 |         5 |      5 |       1000 |
++-------+---------+----------+---------------------+------------+------------+-------+--------+-----------+--------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db4]> alter table employees drop hire;
+Query OK, 0 rows affected (0.36 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db4]> select * from employees  where salary>30000;
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+| empid | fstname | lastname | email               | phnnumber  | jobid | salary | managerid | deptid | commission |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 |     1 |  32767 |         1 |      1 |       1000 |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [db4]> Ctrl-C -- exit!
+Aborted
+student@student-OptiPlex-3050:~$ 
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| adithya            |
+| db1                |
+| db2                |
+| db3                |
+| db4                |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+8 rows in set (0.43 sec)
+
+MariaDB [(none)]> use db4;
+
+Database changed
+MariaDB [db4]> select * from jobs;
++-------+-------------+-----------+-----------+
+| jobid | jobtitle    | minsalary | maxsalary |
++-------+-------------+-----------+-----------+
+|     1 | manager     |     30000 |     80000 |
+|     2 | pa          |     20000 |     40000 |
+|     3 | coordinator |     30000 |     50000 |
+|     4 | clerk       |     15000 |     20000 |
+|     5 | clerk       |     14000 |     30000 |
++-------+-------------+-----------+-----------+
+5 rows in set (0.40 sec)
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+| empid | fstname | lastname | email               | phnnumber  | jobid | salary | managerid | deptid | commission |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 |     1 |  32767 |         1 |      1 |       1000 |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 |     1 |  30000 |         2 |      2 |       1000 |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 |     3 |  20000 |         3 |      3 |       1000 |
+|     4 | raju    | s        | raju@gmail.com      | 2147483647 |     3 |  15000 |         4 |      4 |       1000 |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 |     3 |  14000 |         5 |      5 |       1000 |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db4]> select * from dept;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | importing       |
+|             2 | exporting       |
+|             3 | managing        |
+|             4 | resource        |
+|             5 | funding         |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db4]> delete from employees where empid=4;
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [db4]> select * from employees;
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+| empid | fstname | lastname | email               | phnnumber  | jobid | salary | managerid | deptid | commission |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+|     1 | adithya | radhu    | aradithya@gmail.com | 2147483647 |     1 |  32767 |         1 |      1 |       1000 |
+|     2 | maria   | r        | maria@gmail.com     | 2147483647 |     1 |  30000 |         2 |      2 |       1000 |
+|     3 | veena   | k        | veena@gmail.com     | 2147483647 |     3 |  20000 |         3 |      3 |       1000 |
+|     5 | priya   | s        | priya@gmail.com     | 2147483647 |     3 |  14000 |         5 |      5 |       1000 |
++-------+---------+----------+---------------------+------------+-------+--------+-----------+--------+------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db4]> truncate table employees;
+Query OK, 0 rows affected (0.23 sec)
+
+MariaDB [db4]> truncate table jobs;
+Query OK, 0 rows affected (0.21 sec)
+
+MariaDB [db4]> truncate table dept;
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [db4]> drop table jobs;
+Query OK, 0 rows affected (0.11 sec)
+
+MariaDB [db4]> 
+
+

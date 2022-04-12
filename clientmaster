@@ -1,0 +1,209 @@
+MariaDB [(none)]> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database' at line 1
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db1                |
+| db2                |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+5 rows in set (0.44 sec)
+
+MariaDB [(none)]> create database db3;
+Query OK, 1 row affected (0.00 sec)
+
+
+MariaDB [db3]> create table clientmaster(clientno varchar(15),name varchar(20),address varchar(30),city varchar(20),pincode int,state varchar(15));
+Query OK, 0 rows affected (0.96 sec)
+
+MariaDB [db3]> select * from clientmaster
+    -> ;
+Empty set (0.00 sec)
+
+
+MariaDB [db3]> insert into clientmaster values('co100','ram','miracle','bombay',680267,'india');
+Query OK, 1 row affected (0.09 sec)
+
+MariaDB [db3]> insert into clientmaster values('co200','jaya','green','gandhi',68397,'maharastra');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db3]> insert into clientmaster values('co300','melon','viharh','ernalam',654987,'rajastan');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db3]> insert into clientmaster values('co400','lakshmi','thekezhath','nagar',680569,'tamilnadu');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [db3]> insert into clientmaster values('co500','aadi','andezhath','thrissur',680565,'kerala');
+Query OK, 1 row affected (0.44 sec)
+
+MariaDB [db3]> select * from clientmaster;
++----------+---------+------------+----------+---------+------------+
+| clientno | name    | address    | city     | pincode | state      |
++----------+---------+------------+----------+---------+------------+
+| co100    | ram     | miracle    | bombay   |  680267 | india      |
+| co200    | jaya    | green      | gandhi   |   68397 | maharastra |
+| co300    | melon   | viharh     | ernalam  |  654987 | rajastan   |
+| co400    | lakshmi | thekezhath | nagar    |  680569 | tamilnadu  |
+| co500    | aadi    | andezhath  | thrissur |  680565 | kerala     |
++----------+---------+------------+----------+---------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db3]> select clientno,name from clientmaster;
++----------+---------+
+| clientno | name    |
++----------+---------+
+| co100    | ram     |
+| co200    | jaya    |
+| co300    | melon   |
+| co400    | lakshmi |
+| co500    | aadi    |
++----------+---------+
+5 rows in set (0.00 sec)
+
+MariaDB [db3]> insert into clientmaster values('co500','ram','griham','palakad',680567,'kerala');
+Query OK, 1 row affected (0.50 sec)
+
+MariaDB [db3]> select * from clientmaster;
++----------+---------+------------+----------+---------+------------+
+| clientno | name    | address    | city     | pincode | state      |
++----------+---------+------------+----------+---------+------------+
+| co100    | ram     | miracle    | bombay   |  680267 | india      |
+| co200    | jaya    | green      | gandhi   |   68397 | maharastra |
+| co300    | melon   | viharh     | ernalam  |  654987 | rajastan   |
+| co400    | lakshmi | thekezhath | nagar    |  680569 | tamilnadu  |
+| co500    | aadi    | andezhath  | thrissur |  680565 | kerala     |
+| co500    | ram     | griham     | palakad  |  680567 | kerala     |
++----------+---------+------------+----------+---------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [db3]> select distinct(name) from clientmaster;
++---------+
+| name    |
++---------+
+| ram     |
+| jaya    |
+| melon   |
+| lakshmi |
+| aadi    |
++---------+
+5 rows in set (0.00 sec)
+
+MariaDB [db3]> select clientno,name,address,city from clientmaster order by clientno; 
++----------+---------+------------+----------+
+| clientno | name    | address    | city     |
++----------+---------+------------+----------+
+| co100    | ram     | miracle    | bombay   |
+| co200    | jaya    | green      | gandhi   |
+| co300    | melon   | viharh     | ernalam  |
+| co400    | lakshmi | thekezhath | nagar    |
+| co500    | aadi    | andezhath  | thrissur |
+| co500    | ram     | griham     | palakad  |
++----------+---------+------------+----------+
+6 rows in set (0.00 sec)
+
+MariaDB [db3]> select clientno,name,address,city from clientmaster order by clientno desc; 
++----------+---------+------------+----------+
+| clientno | name    | address    | city     |
++----------+---------+------------+----------+
+| co500    | aadi    | andezhath  | thrissur |
+| co500    | ram     | griham     | palakad  |
+| co400    | lakshmi | thekezhath | nagar    |
+| co300    | melon   | viharh     | ernalam  |
+| co200    | jaya    | green      | gandhi   |
+| co100    | ram     | miracle    | bombay   |
++----------+---------+------------+----------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [db3]> select clientno,name from clientmaster;
++----------+---------+
+| clientno | name    |
++----------+---------+
+| co100    | ram     |
+| co200    | jaya    |
+| co300    | melon   |
+| co400    | lakshmi |
+| co500    | aadi    |
+| co500    | ram     |
++----------+---------+
+6 rows in set (0.00 sec)
+
+MariaDB [db3]> select clientno,name from clientmaster where clientno='co200';;
++----------+------+
+| clientno | name |
++----------+------+
+| co200    | jaya |
++----------+------+
+1 row in set (0.00 sec)
+
+
+MariaDB [db3]> alter table clientmaster add tnm int;
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [db3]> alter table clientmaster add faxno int;
+Query OK, 0 rows affected (0.76 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db3]> select * from clientmaster;
++----------+---------+------------+----------+---------+------------+------+-------+
+| clientno | name    | address    | city     | pincode | state      | tnm  | faxno |
++----------+---------+------------+----------+---------+------------+------+-------+
+| co100    | ram     | miracle    | bombay   |  680267 | india      | NULL |  NULL |
+| co200    | jaya    | green      | gandhi   |   68397 | maharastra | NULL |  NULL |
+| co300    | melon   | viharh     | ernalam  |  654987 | rajastan   | NULL |  NULL |
+| co400    | lakshmi | thekezhath | nagar    |  680569 | tamilnadu  | NULL |  NULL |
+| co500    | aadi    | andezhath  | thrissur |  680565 | kerala     | NULL |  NULL |
+| co500    | ram     | griham     | palakad  |  680567 | kerala     | NULL |  NULL |
++----------+---------+------------+----------+---------+------------+------+-------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [db3]> update clientmaster set tnm=96579012,faxno=8906547890 where clientno='co100';
+Query OK, 1 row affected, 1 warning (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+MariaDB [db3]> update clientmaster set tnm=956981212,faxno=89065476980 where clientno='co200';
+Query OK, 1 row affected, 1 warning (0.51 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+MariaDB [db3]> update clientmaster set tnm=9569847932,faxno=5896321480 where clientno='co300';
+Query OK, 1 row affected, 2 warnings (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 2
+
+MariaDB [db3]> update clientmaster set tnm=956698322,faxno=58965863114 where clientno='co400';
+Query OK, 1 row affected, 1 warning (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+MariaDB [db3]> update clientmaster set tnm=9567893241,faxno=5896583215 where clientno='co500';
+Query OK, 2 rows affected, 4 warnings (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 4
+
+MariaDB [db3]> select * from clientmaster;
++----------+---------+------------+----------+---------+------------+------------+------------+
+| clientno | name    | address    | city     | pincode | state      | tnm        | faxno      |
++----------+---------+------------+----------+---------+------------+------------+------------+
+| co100    | ram     | miracle    | bombay   |  680267 | india      |   96579012 | 2147483647 |
+| co200    | jaya    | green      | gandhi   |   68397 | maharastra |  956981212 | 2147483647 |
+| co300    | melon   | viharh     | ernalam  |  654987 | rajastan   | 2147483647 | 2147483647 |
+| co400    | lakshmi | thekezhath | nagar    |  680569 | tamilnadu  |  956698322 | 2147483647 |
+| co500    | aadi    | andezhath  | thrissur |  680565 | kerala     | 2147483647 | 2147483647 |
+| co500    | ram     | griham     | palakad  |  680567 | kerala     | 2147483647 | 2147483647 |
++----------+---------+------------+----------+---------+------------+------------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [db3]> alter table clientmaster modify faxno varchar(30);
+Query OK, 6 rows affected (0.69 sec)               
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [db3]> drop table clientmaster;drop table clientmaster;
+Query OK, 0 rows affected (0.59 sec)
+
+ERROR 1051 (42S02): Unknown table 'db3.clientmaster'
+MariaDB [db3]> drop table clientmaster;
+
