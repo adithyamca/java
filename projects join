@@ -1,0 +1,115 @@
+student@student-OptiPlex-3050:~$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 35
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database db8;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use db8;
+Database changed
+MariaDB [db8]> create table employee(eid int primary key,ename varchar(15),city varchar(10),salary int,age int);
+Query OK, 0 rows affected (0.23 sec)
+
+MariaDB [db8]> insert into employee values(1,'angelina','chicago','200000','30');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db8]> insert into employee values(2,'robert','austin','300000','26');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [db8]> insert into employee values(3,'christian','denver','100000','42');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db8]> insert into employee values(4,'kristen','washington','500000','29');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [db8]> insert into employee values(5,'russell','losangels','200000','36');
+Query OK, 1 row affected (0.44 sec)
+
+MariaDB [db8]> insert into employee values(6,'marry','canada','600000','48');
+Query OK, 1 row affected (0.03 sec)
+
+
+MariaDB [db8]> create table projects(pno int,eid int references employee,dept varchar(20));
+Query OK, 0 rows affected (0.24 sec)
+
+
+MariaDB [db8]> select * from employee;
++-----+-----------+------------+--------+------+
+| eid | ename     | city       | salary | age  |
++-----+-----------+------------+--------+------+
+|   1 | angelina  | chicago    | 200000 |   30 |
+|   2 | robert    | austin     | 300000 |   26 |
+|   3 | christian | denver     | 100000 |   42 |
+|   4 | kristen   | washington | 500000 |   29 |
+|   5 | russell   | losangels  | 200000 |   36 |
+|   6 | marry     | canada     | 600000 |   48 |
++-----+-----------+------------+--------+------+
+6 rows in set (0.00 sec)
+
+MariaDB [db8]> insert into projects values(101,1,'testing');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db8]>  insert into projects values(102,2,'development');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [db8]> insert into projects values(103,3,'designing');
+Query OK, 1 row affected (0.43 sec)
+
+MariaDB [db8]> insert into projects values(104,4,'development');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db8]> select * from projects;
++------+------+-------------+
+| pno  | eid  | dept        |
++------+------+-------------+
+|  101 |    1 | testing     |
+|  102 |    2 | development |
+|  103 |    3 | designing   |
+|  104 |    4 | development |
++------+------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db8]> select employee.ename,projects.dept from employee inner join projMariaDB [db8]> select employee.ename,projects.dept from employee inner join projects on employee.eid=projects.eid;
++-----------+-------------+
+| ename     | dept        |
++-----------+-------------+
+| angelina  | testing     |
+| robert    | development |
+| christian | designing   |
+| kristen   | development |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db8]> select employee.ename,employee.city,employee.salary,employee.age,projects.pno,projects.dept from employee left join projects on employee.eid=projects.eid;
++-----------+------------+--------+------+------+-------------+
+| ename     | city       | salary | age  | pno  | dept        |
++-----------+------------+--------+------+------+-------------+
+| angelina  | chicago    | 200000 |   30 |  101 | testing     |
+| robert    | austin     | 300000 |   26 |  102 | development |
+| christian | denver     | 100000 |   42 |  103 | designing   |
+| kristen   | washington | 500000 |   29 |  104 | development |
+| russell   | losangels  | 200000 |   36 | NULL | NULL        |
+| marry     | canada     | 600000 |   48 | NULL | NULL        |
++-----------+------------+--------+------+------+-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [db8]> select employee.ename,employee.city,employee.salary,employee.age,projects.pno,projects.dept from employee right join projects on employee.eid=projects.eid;
++-----------+------------+--------+------+------+-------------+
+| ename     | city       | salary | age  | pno  | dept        |
++-----------+------------+--------+------+------+-------------+
+| angelina  | chicago    | 200000 |   30 |  101 | testing     |
+| robert    | austin     | 300000 |   26 |  102 | development |
+| christian | denver     | 100000 |   42 |  103 | designing   |
+| kristen   | washington | 500000 |   29 |  104 | development |
++-----------+------------+--------+------+------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db8]> 
+
