@@ -1,0 +1,42 @@
+Microsoft Windows [Version 10.0.17134.1246]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed May 18 14:49:12 2022
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: student
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> edit prgrm4
+
+SQL> @prgrm4
+Enter value for n: 234
+old   6: num:=&n;
+new   6: num:=234;
+Reversed number is : 432
+
+PL/SQL procedure successfully completed.
+
+SET SERVEROUTPUT ON;
+DECLARE
+num number;
+reverse_num number:=0;
+
+begin
+num:=&n;
+while num>0
+loop
+reverse_num:=(reverse_num*10) + mod(num,10);
+num:=trunc(num/10);
+end loop;
+
+dbms_output.put_line(' Reversed number is : '|| reverse_num);
+end;
+/
+

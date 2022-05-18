@@ -1,0 +1,51 @@
+Microsoft Windows [Version 10.0.17134.1246]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed May 18 14:24:12 2022
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: student
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> edit prgrm2
+
+SQL> @prgrm2
+Even
+
+PL/SQL procedure successfully completed.
+
+SQL> edit prgrm2
+
+SQL> @prgrm2
+Enter value for n: 5
+old   4:        n NUMBER := &n;
+new   4:        n NUMBER := 5;
+Odd
+
+PL/SQL procedure successfully completed.
+
+
+set serveroutput on
+DECLARE
+	-- Declare variable n, s, r, len
+	-- and m of datatype number
+	n NUMBER := &n;
+	r NUMBER;
+BEGIN
+	-- Calculating modulo
+	r := MOD(n, 2);
+
+	IF r = 0 THEN
+	dbms_output.Put_line('Even');
+	ELSE
+	dbms_output.Put_line('Odd');
+	END IF;
+END;
+/
+
