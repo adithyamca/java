@@ -1,0 +1,31 @@
+set serveroutput on
+declare
+empid emp.empid%type;
+name emp.name%type;
+sal emp.sal%type;
+cursor c_emp is
+select empid,name,sal from emp;
+begin
+open c_emp;
+loop
+fetch c_emp into empid,name,sal;
+exit when c_emp%notfound;
+dbms_output.put_line(empid|| ' '|| name|| ' '|| sal);
+end loop;
+close c_emp;
+end;
+/
+
+
+output
+......
+
+
+SQL> @emp
+1 miran 40000
+2 monica 30000
+3 Avinash 30000
+4 johan 35000
+5 jeffry 45000
+
+PL/SQL procedure successfully completed.
