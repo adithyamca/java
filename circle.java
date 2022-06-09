@@ -1,12 +1,11 @@
-import java.util.*;
-public class circle
+import java.awt.*;
+import java.applet.*;
+public class circle extends Applet
 {
-public static void main (String args[])
+ public void paint(Graphics g)
 {
-Scanner input=new Scanner (System.in);
-System.out.print("enter the radius of the circle");
- double rad=input.nextDouble();
-System.out.println("area="+(Math.PI*rad*rad));
-System.out.println("perimeter="+(2*Math.PI*rad));
+ g.drawOval(20,20,200,120);
+ g.setColor(Color.green);
+ g.fillOval(70,30,100,100);
 }
 }
